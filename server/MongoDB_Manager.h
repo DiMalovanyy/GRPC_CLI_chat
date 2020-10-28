@@ -68,13 +68,21 @@ public:
         collection_.insert_one(input_doc_value.view());
     }
     
-    
     std::optional<bsoncxx::document::value> FindDocByKeyValue(const std::string& key, const std::string& value) {
         using bsoncxx::builder::stream::document;
         using bsoncxx::builder::stream::finalize;
         bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result = collection_.find_one( document{} << key << value << finalize);
         if(maybe_result) {
-            return maybe_result.get();
+            returnmaybe_result.get();
+        } else return std::nullopt;
+    }
+    
+    std::optional<std::string> FindJsonByKeyValue(const std::string& key, const std::string& value) {
+        using bsoncxx::builder::stream::document;
+        using bsoncxx::builder::stream::finalize;
+        bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result = collection_.find_one( document{} << key << value << finalize);
+        if(maybe_result) {
+            return bsoncxx::to_json(maybe_result.get().view());
         } else return std::nullopt;
     }
     

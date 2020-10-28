@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package Grpc;
+
+service DataBaseService {
+		
+	rpc AddUser(User) returns (AddUserResponse) {}	
+	
+	rpc GetUserByLogin(Login) returns (GetUserResponse) {}
+
+	rpc GetUserByMail(Mail) returns (GetUserResponse) {}
+	
+	rpc GetAllLogins(VoidRequest) returns (stream Login) {}
+	
+	rpc GetPasswordByLogin(Login) returns (Password) {}
+}
+
+service MessangerService {
+	
+}
+
+message VoidRequest {
+}
+
+message AddUserResponse {
+
+	string error_message = 1;
+}
+
+message JsonDocument {
+	string json = 1;
+}
+
+message Login {
+	string login = 1;
+}
+
+message Password {
+	string password = 1;
+}
+
+message Mail {
+	string mail = 1;
+}
+
+message User {
+	Login login = 1;
+	Password password = 2;
+	Mail mail = 3;
+}
+
+message GetUserResponse {
+	User user = 1;
+	string error_message = 2;
+	JsonDocument json_user = 3;
+}

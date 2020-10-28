@@ -1,0 +1,4 @@
+#pragma once
+#cmakedefine SOURCE_DIR "@SOURCE_DIR@"
+#cmakedefine SERVER_IP "@SERVER_IP@"
+
