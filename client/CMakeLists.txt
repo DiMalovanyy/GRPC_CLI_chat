@@ -3,12 +3,18 @@ set (BINARY ${CMAKE_PROJECT_NAME}_client)
 set(HEADERS
     operator.h
     UImenu.h
+    server_data_base_operator.h
+    json_parser.h
+    utility.h
+    user_session.h
 	)
 set(SOURCES
-       main.cpp	
+       main.cpp
+       json_parser.cpp
 	)
  
- 
+find_package(Curses REQUIRED)
+find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
 set(protobuf_MODULE_COMPATIBLE TRUE)
 find_package(Protobuf CONFIG REQUIRED)
@@ -53,7 +59,7 @@ include_directories(${CURSES_INCLUDE_DIR})
 include_directories(${Boost_INCLUDE_DIRS})
 
 
-add_executable(${BINARY} ${HEADERS} ${SOURCES} ${chat_grpc_hdrs})
+add_executable(${BINARY} ${HEADERS} ${SOURCES} ${chat_grpc_srcs} ${chat_proto_srcs})
 set_target_properties(${BINARY} PROPERTIES
                     CXX_STANDARD 17
                     CXX_STANDARD_REQUIRED ON

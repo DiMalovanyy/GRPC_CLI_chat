@@ -56,7 +56,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 include_directories(${Boost_INCLUDE_DIRS})
  
-add_executable(${BINARY} ${HEADERS} ${SOURCES} ${chat_grpc_hdrs})
+add_executable(${BINARY} ${HEADERS} ${SOURCES} ${chat_grpc_srcs} ${chat_proto_srcs})
 set_target_properties(${BINARY} PROPERTIES
                         CXX_STANDARD 17
                         CXX_STANDARD_REQUIRED ON
@@ -64,6 +64,7 @@ set_target_properties(${BINARY} PROPERTIES
 
 target_link_libraries(${BINARY} ${Boost_LIBRARIES})
 target_link_libraries(${BINARY} mongo::mongocxx_shared)
+
 target_link_libraries(${BINARY}
                     ${_REFLECTION}
                     ${_GRPC_GRPCPP}

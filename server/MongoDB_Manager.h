@@ -73,7 +73,7 @@ public:
         using bsoncxx::builder::stream::finalize;
         bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result = collection_.find_one( document{} << key << value << finalize);
         if(maybe_result) {
-            returnmaybe_result.get();
+            return maybe_result.get();
         } else return std::nullopt;
     }
     

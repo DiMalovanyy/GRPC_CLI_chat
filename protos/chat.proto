@@ -13,6 +13,8 @@ service DataBaseService {
 	rpc GetAllLogins(VoidRequest) returns (stream Login) {}
 	
 	rpc GetPasswordByLogin(Login) returns (Password) {}
+		
+	rpc IsExist(Login) returns (IsExistResponse) {}
 }
 
 service MessangerService {
@@ -53,4 +55,8 @@ message GetUserResponse {
 	User user = 1;
 	string error_message = 2;
 	JsonDocument json_user = 3;
+}
+
+message IsExistResponse {
+	bool exist = 1;
 }

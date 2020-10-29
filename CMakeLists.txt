@@ -4,7 +4,8 @@ project(Chat LANGUAGES C CXX VERSION 0.0.1)
 
 
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR})
-set(SERVER_IP "localhost:27017")
+set(SERVER_IP "localhost:50051")
+set(DATA_BASE_IP "localhost:27017")
 
 foreach(subdirectory
             client server)
