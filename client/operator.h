@@ -33,7 +33,7 @@ public:
         Menu::MenuSizes menu_sizes = {20,80};
 
         while(true) {
-            Menu::ChoiceMenu* main_menu = new Menu::ChoiceMenu(main_menu_items, menu_sizes);
+            Menu::ChoiceMenu* main_menu = new Menu::ChoiceMenu(main_menu_items, menu_sizes, "Login or Register");
             int choice = main_menu -> ShowAndGetChoice();
             if (choice == 1) {
                 Menu::InputMenu* login_menu = new Menu::InputMenu(login_menu_items, menu_sizes, "Press Enter to login");
@@ -44,13 +44,16 @@ public:
                     Session session(data_base.GetUserByLogin(resulting_login_items_map["Login"]));
                     Menu::ChoiceMenu* users_list = new Menu::ChoiceMenu({}, menu_sizes, "Choose user to write him");
                     session.ShowUsersLists(*users_list, data_base);
+                    delete users_list;
                     break;
                 } else {
                     Menu::ShowMenu error_login_menu("Incorrect password or user not exist", menu_sizes);
                     error_login_menu.Show();
                 }
+                
+                delete login_menu;
             } else if (choice == 2) {
-                Menu::InputMenu* register_menu= new Menu::InputMenu(register_menu_items, menu_sizes);
+                Menu::InputMenu* register_menu= new Menu::InputMenu(register_menu_items, menu_sizes, "Press Enter to register");
                 auto resulting_items_map = register_menu -> GetInput();
                 User new_user = User( resulting_items_map["Login"],
                                      resulting_items_map["Password"],
@@ -62,7 +65,12 @@ public:
                 } else {
                     data_base.AddUser(new_user);
                 }
+                
+                delete register_menu;
             }
+            
+            delete main_menu;
+            
         }
 
     }

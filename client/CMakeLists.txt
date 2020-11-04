@@ -7,6 +7,9 @@ set(HEADERS
     json_parser.h
     utility.h
     user_session.h
+    chat.h
+    chat_data_base_operator.h
+    UIchat_menu.h
 	)
 set(SOURCES
        main.cpp

@@ -5,6 +5,7 @@ set(HEADERS
     data_base_service.h
     utility.h
     json_parser.h
+    chat_service.h
 	)
 set(SOURCES
 	main.cpp

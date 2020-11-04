@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <boost/date_time.hpp>
+
 
 #include "json_parser.h"
 #include "chat.pb.h"
@@ -53,5 +55,45 @@ const std::string User::ToJson() const {
     ss << (*this);
     return ss.str();
 }
+
+struct Message {
+    Message(const std::string& author_login, const std::string& value) : author_login_(author_login), value_(value) {
+        date_time_ = boost::posix_time::second_clock::local_time();
+    }
+    
+    Message(const Grpc::Message& grpc_message) :
+    date_time_(
+            boost::gregorian::date(
+                                   grpc_message.send_date().year(),
+                                   grpc_message.send_date().month(),
+                                   grpc_message.send_date().day()
+                                   ),
+            boost::posix_time::time_duration(
+                                             grpc_message.send_date().hours(),
+                                             grpc_message.send_date().minutes(),
+                                             0
+                                             )
+               )
+    {
+        author_login_ = grpc_message.author_login();
+        value_ = grpc_message.value();
+    }
+    
+    Grpc::Message GetGrpcRepresentation() const {
+        Grpc::Message message;
+        message.set_author_login(author_login_);
+        message.set_value(value_);
+        message.mutable_send_date() -> set_year(date_time_.date().year());
+        message.mutable_send_date() -> set_month(date_time_.date().month());
+        message.mutable_send_date() -> set_day(date_time_.date().day());
+        message.mutable_send_date() -> set_hours(date_time_.time_of_day().hours());
+        message.mutable_send_date() -> set_minutes(date_time_.time_of_day().minutes());
+        return message;
+    }
+    
+    std::string author_login_;
+    std::string value_;
+    boost::posix_time::ptime date_time_;
+};
 
 

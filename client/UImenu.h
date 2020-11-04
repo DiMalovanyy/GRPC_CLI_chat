@@ -36,6 +36,7 @@ public:
     
     void PrintMsgAtMenuLine(std::string message, int line) {
         mvwprintw(menu_, line, 1, std::string(sizes_.width - 3,' ').data());
+        wrefresh(menu_);
         mvwprintw(menu_, line, 2, message.data());
         wrefresh(menu_);
     }
@@ -57,7 +58,7 @@ private:
 
 class ChoiceMenu : public Menu {
 public:
-    explicit ChoiceMenu(const std::vector<std::string>& menu_items, MenuSizes sizes, const std::string title = "") : Menu(sizes, title), menu_items_(menu_items){
+    explicit ChoiceMenu(const std::vector<std::string>& menu_items, MenuSizes sizes, const std::string title = "") : Menu(sizes, title), menu_items_(menu_items) {
         PrintMsgAtMenuLine(title, GetSizes().height - 2 );
     }
     
@@ -70,7 +71,7 @@ public:
         WINDOW* menu_ = GetMenu();
         int highlight = 0; int choice = 0; int c;
         clear(); noecho(); cbreak(); keypad(menu_, TRUE);
-        refresh(); //1
+        refresh();//1
         const int choices_amount = GetSizes().height - 8;
         int from = 0;
         int to = (choices_amount > ItemsCount()) ? ItemsCount() : choices_amount;
@@ -126,7 +127,7 @@ private:
         int x, y, i;
         x = 2;
         y = 4;
-        wclear(menu_);
+//        wclear(menu_);
         box(menu_, 0, 0);
         if (from != 0) {
             mvwaddch(menu_, y - 1 , x + 3, ACS_UARROW);
@@ -146,6 +147,7 @@ private:
         }
         wrefresh(menu_);
     }
+    
     std::vector<std::string> menu_items_;
 };
 
@@ -154,7 +156,7 @@ private:
 class InputMenu : public Menu {
 public:
     
-    explicit InputMenu(const std::vector<std::string>& input_fields, MenuSizes sizes, const std::string title = "") : Menu(sizes,title), input_fields_(input_fields){
+    explicit InputMenu(const std::vector<std::string>& input_fields, MenuSizes sizes, const std::string title = "") : Menu(sizes, title), input_fields_(input_fields){
         PrintMsgAtMenuLine(title, GetSizes().height - 2 );
     }
     
@@ -299,7 +301,6 @@ private:
     }
     std::vector<std::string> lines;
 };
-
 
 }
 

@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package Grpc;
 
+//Data Base Service
 service DataBaseService {
 		
 	rpc AddUser(User) returns (AddUserResponse) {}	
@@ -15,10 +16,6 @@ service DataBaseService {
 	rpc GetPasswordByLogin(Login) returns (Password) {}
 		
 	rpc IsExist(Login) returns (IsExistResponse) {}
-}
-
-service MessangerService {
-	
 }
 
 message VoidRequest {
@@ -60,3 +57,52 @@ message GetUserResponse {
 message IsExistResponse {
 	bool exist = 1;
 }
+
+
+
+//Chat Service
+service ChatService {
+		
+	rpc SendMessage(SendMessageRequest) returns (IsOkResponse) {}
+	
+	rpc GetFullChat(PrivateChatUsers) returns (FullChat) {}
+
+}
+
+message IsOkResponse {
+	bool ok = 1;
+}
+
+message SendMessageRequest {
+	PrivateChatUsers users = 1;
+	Message text = 2;
+}
+
+message PrivateChatUsers {
+	User sender = 1;
+	User reciver = 2;
+}
+
+message Date {
+	int32 year = 1;	
+	int32 month = 2;
+	int32 day = 3;
+	int32 hours = 4;
+	int32 minutes = 5;
+}
+
+message Message {
+	string author_login = 1;
+	string value = 2;
+	Date send_date = 3;
+}
+
+message FullChat {
+	repeated Message messages= 2;
+}
+
+
+
+
+
+
