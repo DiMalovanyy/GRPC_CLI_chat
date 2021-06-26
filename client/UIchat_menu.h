@@ -21,7 +21,7 @@ public:
         refresh();
         int y_input_position = GetSizes().height - 3;
         int x_input_position = 4;
-//        int chat_height = 
+//        int chat_height =
         PrintMenu(menu_, 0, 0);
         echo();
         char c = mvwgetch(menu_, y_input_position, x_input_position);
@@ -31,9 +31,9 @@ public:
 //            case KEY_DOWN: :break;
 //            default:
 //        }
-            
-        
-        
+//
+//
+//
         
         wgetch(menu_);
         refresh();
